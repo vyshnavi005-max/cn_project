@@ -67,27 +67,41 @@ class ChatClient:
     def handle_message(self, message_data):
         """Handle incoming chat message from server"""
         try:
-            # Add to history
+            # --- START CHANGE ---
+
+            # Check if the message is from the current user
+            # If so, we already added it locally in send_message, so skip adding it again.
+            if message_data.get('username') == self.main_client.username:
+                # Optional: You could potentially update the local message with server info
+                # like a server-assigned ID or timestamp here if needed, but for
+                # preventing duplicates, just returning is sufficient.
+                print(f"DEBUG: Ignoring own broadcasted message.") # Optional debug print
+                return # Don't add it again
+
+            # --- END CHANGE ---
+
+            # Add to history (only if it's from someone else)
             self.message_history.append(message_data)
-            
+
             # Keep only recent messages
             if len(self.message_history) > self.max_history:
                 self.message_history = self.message_history[-self.max_history:]
-            
+
             # Update GUI if available
             if self.main_client.main_window:
                 self.main_client.main_window.update_chat_display()
-            
+
             # Print to console
             username = message_data.get('username', 'Unknown')
             message = message_data.get('message', '')
-            timestamp = message_data.get('timestamp', '')
-            
-            print(f"💬 {username}: {message}")
-            
+            # timestamp = message_data.get('timestamp', '') # Already handled in format_message_for_display
+
+            print(f"💬 {username}: {message}") # Keep console log for received messages
+
         except Exception as e:
             print(f"❌ Error handling chat message: {e}")
     
+
     def handle_system_message(self, message_data):
         """Handle system message from server"""
         try:

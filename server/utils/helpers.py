@@ -8,6 +8,88 @@ import os
 import sys
 from datetime import datetime
 
+
+# Add these imports at the top if not already present
+import json
+import struct
+import socket # Keep existing imports like logging, os, sys, datetime
+
+# ...(keep existing functions like setup_logging, log_event, etc.)...
+
+# Helper to send a framed message (NEW)
+def send_framed_message(sock, message_dict):
+    """Sends a JSON message prefixed with its length."""
+    try:
+        message_json = json.dumps(message_dict).encode('utf-8')
+        message_len = len(message_json)
+        # Pack the length into 4 bytes (unsigned integer, network byte order)
+        header = struct.pack('!I', message_len)
+        sock.sendall(header + message_json) # Send header then message
+        return True
+    except socket.error as e:
+        log_error(f"Socket error sending framed message: {e}")
+        return False
+    except Exception as e:
+        log_error(f"Error sending framed message: {e}")
+        return False
+
+# Helper to receive a framed message (NEW)
+def receive_framed_message(sock):
+    """Receives a length-prefixed JSON message."""
+    try:
+        # Read the 4-byte header first
+        header_data = sock.recv(4)
+        if not header_data:
+            log_event("Connection closed by client while receiving header.")
+            return None
+        if len(header_data) < 4:
+            log_warning("Incomplete header received, connection may be unstable.")
+            # In a production scenario, you might try to read more, but here we'll assume failure
+            return None
+
+        message_len = struct.unpack('!I', header_data)[0]
+
+        # Check for unreasonably large messages (e.g., > 10MB) to prevent memory issues
+        if message_len > 10 * 1024 * 1024:
+             log_error(f"Declared message length too large: {message_len}. Closing connection.")
+             # Consider closing the socket here
+             return None
+
+        # Now read exactly message_len bytes
+        message_data = b""
+        bytes_to_read = message_len
+        while len(message_data) < message_len:
+            # Read in chunks to avoid blocking for too long on massive messages
+            chunk_size = min(4096, bytes_to_read)
+            chunk = sock.recv(chunk_size)
+            if not chunk:
+                log_event("Connection closed by client while receiving message body.")
+                return None # Connection lost before full message received
+            message_data += chunk
+            bytes_to_read -= len(chunk)
+
+        # Decode and parse the JSON message
+        try:
+             return json.loads(message_data.decode('utf-8'))
+        except json.JSONDecodeError as e:
+             log_error(f"JSON decode error: {e}. Data received (partial): {message_data[:100]}...")
+             return None
+
+    except socket.timeout:
+        # This can happen if the socket has a timeout, handle as needed
+        log_warning("Socket timed out waiting for message.")
+        return None
+    except struct.error as e:
+        log_error(f"Error unpacking header: {e}")
+        return None
+    except socket.error as e:
+        log_error(f"Socket error receiving framed message: {e}")
+        return None # Indicate connection issue
+    except Exception as e:
+        log_error(f"Unexpected error receiving framed message: {e}")
+        return None
+
+
 def setup_logging():
     """Setup logging configuration"""
     log_dir = "server/logs"

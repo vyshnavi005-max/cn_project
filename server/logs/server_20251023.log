@@ -44,3 +44,33 @@
 2025-10-23 19:21:20,193 - INFO - User vysh disconnected
 2025-10-23 19:28:23,003 - INFO - User vysh registered from ('127.0.0.1', 58943)
 2025-10-23 19:28:42,760 - INFO - User vysh disconnected
+2025-10-23 21:15:05,256 - INFO - Server started listening on 0.0.0.0:5000
+2025-10-23 21:15:26,996 - INFO - New connection from ('127.0.0.1', 57803)
+2025-10-23 21:15:26,998 - INFO - Connection closed by client while receiving header.
+2025-10-23 21:15:26,999 - INFO - Closed socket for ('127.0.0.1', 57803) (User: Disconnected)
+2025-10-23 21:22:58,388 - INFO - New connection from ('127.0.0.1', 53504)
+2025-10-23 21:22:58,395 - INFO - User 'vydh' registered from ('127.0.0.1', 53504)
+2025-10-23 21:24:33,817 - INFO - New connection from ('127.0.0.1', 55259)
+2025-10-23 21:24:33,819 - INFO - User 'vyshii' registered from ('127.0.0.1', 55259)
+2025-10-23 21:26:26,455 - INFO - Connection closed by client while receiving header.
+2025-10-23 21:26:26,457 - INFO - User 'vyshii' disconnected
+2025-10-23 21:26:26,462 - INFO - Closed socket for ('127.0.0.1', 55259) (User: vyshii)
+2025-10-23 21:26:47,049 - INFO - Connection closed by client while receiving header.
+2025-10-23 21:26:47,050 - INFO - User 'vydh' disconnected
+2025-10-23 21:26:47,051 - INFO - Closed socket for ('127.0.0.1', 53504) (User: vydh)
+2025-10-23 21:31:08,171 - INFO - New connection from ('127.0.0.1', 52026)
+2025-10-23 21:31:08,174 - INFO - User 'vyshi' registered from ('127.0.0.1', 52026)
+2025-10-23 21:31:41,008 - INFO - New connection from ('127.0.0.1', 52027)
+2025-10-23 21:31:41,026 - INFO - User 'vyh' registered from ('127.0.0.1', 52027)
+2025-10-23 21:32:48,622 - INFO - Connection closed by client while receiving header.
+2025-10-23 21:32:48,631 - INFO - User 'vyh' disconnected
+2025-10-23 21:32:48,634 - INFO - Closed socket for ('127.0.0.1', 52027) (User: vyh)
+2025-10-23 21:32:51,633 - INFO - Connection closed by client while receiving header.
+2025-10-23 21:32:51,639 - INFO - User 'vyshi' disconnected
+2025-10-23 21:32:51,644 - INFO - Closed socket for ('127.0.0.1', 52026) (User: vyshi)
+2025-10-23 21:34:49,354 - INFO - Server shutdown requested.
+2025-10-23 21:34:49,816 - INFO - Stopped accepting connections.
+2025-10-23 21:34:51,029 - INFO - Closed TCP server socket.
+2025-10-23 21:34:51,030 - INFO - Closed Video UDP server socket.
+2025-10-23 21:34:51,031 - INFO - Closed Audio UDP server socket.
+2025-10-23 21:34:51,032 - INFO - Server stopped.
