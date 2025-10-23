@@ -1,0 +1,29 @@
+# LAN Communication Application Requirements
+
+# Core dependencies
+opencv-python>=4.5.0
+Pillow>=8.0.0
+numpy>=1.20.0
+
+# Audio processing
+pyaudio>=0.2.11
+
+# GUI (tkinter is included with Python)
+# For advanced GUI features (optional)
+# PyQt5>=5.15.0
+
+# Screen capture (Windows)
+pyautogui>=0.9.50
+mss>=6.1.0
+
+# System utilities
+psutil>=5.8.0
+
+# Optional: For better compression
+# zlib is included with Python
+# gzip is included with Python
+
+# Development dependencies (optional)
+# pytest>=6.0.0
+# black>=21.0.0
+# flake8>=3.8.0
